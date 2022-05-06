@@ -1,82 +1,85 @@
 package todoList.tasks;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.time.LocalDateTime;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
 class TaskListTest {
 	TaskList taskList;
-	private final PrintStream standardOut = System.out;
-	private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+	List<Task> tList;
+	Task task1;
+	Task task2;
+	Task task3;
+	Task task4;
+
 	@BeforeEach
 	public void setUp() throws Exception {
+		// create four tasks
+		task1 = new Task("laundry", LocalDateTime.of(2022, 04, 28, 10, 33, 20));
+		task2 = new Task("research", LocalDateTime.of(2022, 05, 01, 14, 33, 48));
+		task3 = new Task("swim", LocalDateTime.of(2022, 05, 05, 14, 33, 48));
+		task4 = new Task("shower", LocalDateTime.of(2022, 05, 8, 14, 33, 48));
+		// add the four tasks into the taskList
 		taskList = new TaskList();
-	    System.setOut(new PrintStream(outputStreamCaptor));
-	}
-	
-	@AfterEach
-	public void tearDown() {
-	    System.setOut(standardOut);
-	}
-
-	@Test
-	public void testUpdateName() {
-		taskList.addNewTask("laundry", LocalDateTime.of(2022, 04, 28, 10, 33, 20));
-		taskList.addNewTask("research", LocalDateTime.of(2022, 05, 01, 14, 33, 48));
-		taskList.addNewTask("swim", LocalDateTime.of(2022, 05, 05, 14, 33, 48));
-		taskList.addNewTask("shower", LocalDateTime.of(2022, 05, 8, 14, 33, 48));
-		
-		taskList.updateName("swim", "run");
-		for(Task task: taskList.getList()) {
-			System.out.println(task);
-		}
-	    Assert.assertEquals("laundry false 2022-04-28T10:33:20 null null\r\n" + 
-	    		"research false 2022-05-01T14:33:48 null null\r\n" + 
-	    		"run false 2022-05-05T14:33:48 null null\r\n" + 
-	    		"shower false 2022-05-08T14:33:48 null null", outputStreamCaptor.toString()
-	    	      .trim());
+		taskList.addNewTask(task1);
+		taskList.addNewTask(task2);
+		taskList.addNewTask(task3);
+		taskList.addNewTask(task4);
+		// created a array list for comparison
+		tList = new ArrayList<Task>();
+		tList.add(task1);
+		tList.add(task2);
+		tList.add(task3);
+		tList.add(task4);
 	}
 	
 	@Test
-	public void testUpdateDeadline() {
-		taskList.addNewTask("laundry", LocalDateTime.of(2022, 04, 28, 10, 33, 20));
-		taskList.addNewTask("research", LocalDateTime.of(2022, 05, 01, 14, 33, 48));
-		taskList.addNewTask("swim", LocalDateTime.of(2022, 05, 05, 14, 33, 48));
-		taskList.addNewTask("shower", LocalDateTime.of(2022, 05, 8, 14, 33, 48));
+	public void testAddTasks() {		
+		assertTrue(tList.equals(taskList.getList()));
 		
-		taskList.updateDeadline("swim",LocalDateTime.of(2022, 05, 06, 14, 33, 48));
-		for(Task task: taskList.getList()) {
-			System.out.println(task);
-		}
-	    Assert.assertEquals("laundry false 2022-04-28T10:33:20 null null\r\n" + 
-	    		"research false 2022-05-01T14:33:48 null null\r\n" + 
-	    		"swim false 2022-05-05T14:33:48 2022-05-06T14:33:48 null\r\n" + 
-	    		"shower false 2022-05-08T14:33:48 null null", outputStreamCaptor.toString()
-	    	      .trim());
+	}
+	
+	@Test
+	public void testUpdateName() {		
+		taskList.updateName("laundry", "run");
+		task1.setName("run");
+		assertTrue(tList.equals(taskList.getList()));
+	}
+	
+	@Test
+	public void testUpdateDeadline() {		
+		taskList.updateDeadline("laundry",LocalDateTime.of(2022, 05, 06, 14, 33, 48));
+		task1.setDeadline(LocalDateTime.of(2022, 05, 06, 14, 33, 48));
+		assertTrue(tList.equals(taskList.getList()));
+		
 	}
 	
 	@Test
 	public void testUpdateDonetime() {
-		taskList.addNewTask("laundry", LocalDateTime.of(2022, 04, 28, 10, 33, 20));
-		taskList.addNewTask("research", LocalDateTime.of(2022, 05, 01, 14, 33, 48));
-		taskList.addNewTask("swim", LocalDateTime.of(2022, 05, 05, 14, 33, 48));
-		taskList.addNewTask("shower", LocalDateTime.of(2022, 05, 8, 14, 33, 48));
-		
-		taskList.updateDoneTime("swim",LocalDateTime.of(2022, 05, 06, 15, 33, 48));
-		for(Task task: taskList.getList()) {
-			System.out.println(task);
-		}
-	    Assert.assertEquals("laundry false 2022-04-28T10:33:20 null null\r\n" + 
-	    		"research false 2022-05-01T14:33:48 null null\r\n" + 
-	    		"swim false 2022-05-05T14:33:48 null 2022-05-06T15:33:48\r\n" + 
-	    		"shower false 2022-05-08T14:33:48 null null", outputStreamCaptor.toString()
-	    	      .trim());
+		taskList.updateDoneTime("laundry",LocalDateTime.of(2022, 05, 06, 15, 33, 48));
+		task1.setDoneTime(LocalDateTime.of(2022, 05, 06, 15, 33, 48));;
+		assertTrue(tList.equals(taskList.getList()));
 	}
+	
+	@Test
+	public void testUpdateStatus() {
+		taskList.updateStatus("laundry",true);
+		task1.setStatus(true);;
+		assertTrue(tList.containsAll(taskList.getList()));
+	}
+	
+	@Test
+	public void testdeleteTask() {
+		taskList.deleteTask("laundry");
+		tList.remove(task1);
+		assertTrue(tList.containsAll(taskList.getList()));
+	}
+
 
 }

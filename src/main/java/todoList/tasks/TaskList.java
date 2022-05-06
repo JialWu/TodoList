@@ -11,12 +11,11 @@ public class TaskList {
 		this.taskList = new ArrayList<Task>();
 	}
 	
-	public void addNewTask(String name, LocalDateTime timeCreated) {
-		Task task = new Task(name, timeCreated);
+	public void addNewTask(Task task) {
 		this.taskList.add(task);
 	}
 	
-	private Task getTasktoUpdate(String name) {
+	private Task getTasktoUpdate(String name) throws NullPointerException{
 		Task TasktoUpdate = this.taskList.stream()
 				.filter(task -> task.getName().equals(name))
 				.findAny()

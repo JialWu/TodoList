@@ -13,9 +13,11 @@ import java.time.LocalDate;
 
 public class TaskFilter {
 	private LocalDate currentDate;
+	//private TaskList taskList;
 	
-	public TaskFilter() {
-		this.currentDate = LocalDate.now();
+	public TaskFilter(LocalDate localDate) {
+		this.currentDate = localDate;
+		//this.taskList = taskList;
 	}
 	
 	// not sure whether just show unfinished tasks
