@@ -16,7 +16,7 @@ export default function Todolist({tasks, setTasks}) {
       },[setTasks])
 
   return (
-    <List sx={{ width: '100%', maxWidth: '50%', bgcolor: 'background.paper' }}>
+    <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
       {tasks.filter(task=>task.dueTime && (task.dueTime === curTime) && (task.status === false))
             .map(todayTask=>(<Todotasks key={todayTask.id} text={todayTask.name} task={todayTask} setTasks={setTasks}/>))}
     </List>

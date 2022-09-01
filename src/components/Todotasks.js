@@ -8,10 +8,10 @@ import IconButton from '@mui/material/IconButton';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Divider from '@mui/material/Divider';
 
 export default function Todotasks({text, task, setTasks}) {
     // const [status, setstatus] = React.useState(false);
-
     const statusHandler = (e) => {
         const status = e.target.checked;
         const finished={status}
@@ -46,9 +46,10 @@ export default function Todotasks({text, task, setTasks}) {
         }
 
     return (
+      <>
         <ListItem
             secondaryAction={
-              <IconButton size="small" edge="end" onClick={deleteHandler}>
+              <IconButton edge="end" onClick={deleteHandler}>
                 <DeleteForeverIcon />
               </IconButton>
             }
@@ -57,11 +58,13 @@ export default function Todotasks({text, task, setTasks}) {
             {/* TODO: onClick for each task linking to its detail page: onClick={handleToggle()} */}
             <ListItemButton role={undefined} dense>
               <ListItemIcon>
-                <Checkbox size="small" icon={<CheckCircleOutlineIcon />} checkedIcon={<CheckCircleIcon />}// status={status}
+                <Checkbox icon={<CheckCircleOutlineIcon />} checkedIcon={<CheckCircleIcon />}// status={status}
                   onChange={statusHandler} />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={text} primaryTypographyProps={{ style: {fontSize: 'large'}}}/>
             </ListItemButton>
         </ListItem>
+        <Divider variant="inset" component="li" />
+      </>
     );
 }

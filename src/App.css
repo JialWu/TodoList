@@ -1,6 +1,9 @@
 * {
   box-sizing: border-box;
 }
+html, body, #app, #root{
+  height: 100%
+}
 /* Header/logo Title */
 .header {
   padding: 1px;
@@ -15,14 +18,15 @@
 .row {  
   display: flex;
   flex-wrap: wrap;
+  height: 80%
 }
 
 /* Create two unequal columns that sits next to each other */
 /* Sidebar/left column */
 .side {
-  flex: 18%;
+  flex: 15%;
   background-color: #f1f1f1;
-  padding: 20px;
+  padding: 10px;
 }
 /* Fake image, just for this example */
 .fakeimg {
@@ -34,26 +38,34 @@
 
 /* Main column */
 .main {
-  flex: 60%;
+  flex: 50%;
   background-color: white;
-  padding: 20px;
+  padding: 10px;
   margin-top: 1%;
-  margin-left: 22%;
+  margin-left: 11%;
+  margin-right: 11%;
 }
 
 .taskField{
-  max-width: 50%;
+  max-width: 100%;
+}
+.taskFieldInput {
+  padding: 15px;
+  border:1px solid #607d8b;
+  border-radius: 5px;
+}
+#standard-textarea:focus > .taskFieldInput{
+  padding: 15px;
+  border:2px solid red;
+  border-radius: 5px;
 }
 /* set the time and add module */
 .addTaskContainer {
-  width: 80%;
+  margin-top: 20px;
+  height: 30px;
+  width: 100%;
   display: flex;
   /* background-color:#f8f8f8; */
-}
-.addTaskContainer > div {
-  /* background-color: #f1f1f1; */
-  margin: 0px;
-  padding: 0px;
 }
 
 .addTask-btn {
@@ -77,6 +89,9 @@
     flex-direction: column;
   }
 }
+
+
+
 
 .taskInput {
   width: 80%;

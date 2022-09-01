@@ -18,10 +18,6 @@ function App() {
     setShow(true)
     console.log(show)
   }
-  const hideTaskField = (e) => {
-    setShow(false)
-    console.log(show)
-  }
 
   return (
     <>
@@ -49,7 +45,7 @@ function App() {
 
         {/* show or hide taskfield */}
         {!show && <Button size="small" startIcon={<AddCircleOutlineIcon/>} onClick={showTaskField}>new task</Button>}
-        { show && (<div><Taskfield setTasks={setTasks}/> <button onClick={hideTaskField}>cancel</button></div>)}
+        { show && <Taskfield setTasks={setTasks} setShow={setShow}/>}
 
         {/* <Taskfield setTasks={setTasks}/> */}
         {/* <br> */}

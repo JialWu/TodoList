@@ -1,38 +1,37 @@
 import * as React from 'react';
-import {styled} from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Button from '@mui/material/Button';
+import { blue,grey } from '@mui/material/colors';
+//import DeleteIcon from '@mui/icons-material/Delete';
 
-const CssTextField = styled(TextField)({
-  '& label.Mui-focused': {
-    color: 'green',
+const ColorButton = styled(Button)(({ theme }) => ({
+  backgroundColor: grey[200],
+  color: 'black',
+  '&:hover': {
+    backgroundColor: grey[400],
   },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: 'green',
+}));
+const TaskButton = styled(Button)(({ theme }) => ({
+  backgroundColor: blue[900],
+  color: 'white',
+  '&:hover': {
+    backgroundColor: blue[400],
   },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      border: 'none',
-    },
-    '&:hover fieldset': {
-      borderColor: 'yellow',
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: 'green',
-    },
-  },
-});
+}));
 
-export default function Taskfield({setTasks}) {
+export default function Taskfield({setTasks, setShow}) {
   // const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
   const [timeAdded, setAddTime] = React.useState(new Date().toJSON());
   const [dueDate, setDueDate] = React.useState(new Date());
   //var [timeAdded, setAddTime] = React.useState(new Date().toJSON());
   const [name,setName] = React.useState('');
-  const [status, setStatus] = React.useState(false);
+  //const [status, setStatus] = React.useState(false);
+  const status = false;
 
   // const handleStatusChange=(e)=>{
   //   setStatus(e.target.checked);
@@ -63,80 +62,45 @@ export default function Taskfield({setTasks}) {
     .then((result)=>{
       setTasks(result);})
   })}
+  const hideTaskField = (e) => {
+    setShow(false)
+    //console.log(show)
+  }
 
   return (
-      <div className='taskField'>
-          <CssTextField
-            fullWidth
-            id="outlined-multiline-static"
-            label=""
-            multiline
-            rows={4}
-            placeholder='add your next task, e.g., read a book'
-            value={name}
-            onChange={(e)=>setName(e.target.value)}
-          />
-          <div className="addTaskContainer">
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label=""
-                value={dueDate}
-                onChange={(newValue) => {
-                  setDueDate(newValue);
-                }}
-                renderInput={(params) => <TextField size="small" fontSize="small" sx={{maxWidth: '50%'}}{...params} />}
-              />
-            </LocalizationProvider>
-
-          <div>
-            <input type="checkbox" checked={status}
-                   onChange={() => setStatus(!status)}
-                   // onClick={handleStatusChange}
-            />
-          </div> 
-
-          <div>
-            <button className="addTask-btn" onClick={addTaskHandler}>
-              <span>Add task</span>
-            </button>
-          </div>
-        </div>
-
-        {/* <TextField
-          id="outlined-multiline-static"
-          label="Task"
+    <div className='taskField'>
+      <div className='taskFieldInput'>
+        <TextField
+          fullWidth
+          id="standard-textarea"
+          label=""
+          placeholder="add your next task, e.g., read a book"
           multiline
-          rows={3}
-          //defaultValue=""
+          variant="standard"
+          InputProps={{ disableUnderline: true, style: { fontWeight: 'bold' }}}
           value={name}
           onChange={(e)=>setName(e.target.value)}
-        /> */}
-        {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            label="Due time"
-            value={timeAdded}
-            onChange={(newValue) => {
-              setAddTime(newValue);
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider> */}
-
-        {/* <Checkbox
-          {...label}
-          //defaultChecked
-          checked={status}
-          onClick={handleStatusChange}
-          sx={{
-            color: pink[800],
-            '&.Mui-checked': {
-            color: pink[600],
-          },
-        }}
-        /> */}
-        {/* <Button variant="contained" color="success" onClick={handleClick}>
-            Add
-        </Button> */}
+        />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label=""
+              value={dueDate}
+              InputProps={{
+                disableUnderline: true
+              }}
+              onChange={(newValue) => {
+                setDueDate(newValue);
+              }}
+              renderInput={(params) => <TextField size="small" variant="standard" sx={{maxWidth: '130px', paddingTop: '25px'}}{...params} />}
+            />
+        </LocalizationProvider>
       </div>
+  
+      <div className="addTaskContainer">
+        
+        <TaskButton variant="contained" size="small" sx={{marginLeft: "auto", marginRight: "10px"}} onClick={addTaskHandler}>Add task</TaskButton>
+        <ColorButton variant="contained" size="small" onClick={hideTaskField}>cancel</ColorButton>
+      </div>
+    </div>
   );
 }
