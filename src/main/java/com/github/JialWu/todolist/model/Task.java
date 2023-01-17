@@ -1,9 +1,13 @@
 package com.github.JialWu.todolist.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 public class Task {
@@ -12,8 +16,8 @@ public class Task {
 	private int id;
 	private String name;
 	private boolean status;
-	private String timeAdded;
-	private String dueTime;
+	private Instant timeAdded;
+	private LocalDate dueTime;
 
 	public Task() {
 	}
@@ -42,19 +46,19 @@ public class Task {
 		this.status = status;
 	}
 
-	public String getTimeAdded() {
+	public Instant getTimeAdded() {
 		return timeAdded;
 	}
 
-	public void setTimeAdded(String timeAdded) {
+	public void setTimeAdded(Instant timeAdded) {
 		this.timeAdded = timeAdded;
 	}
 
-	public String getDueTime() {
+	public LocalDate getDueTime() {
 		return dueTime;
 	}
 
-	public void setDueTime(String dueTime) {
+	public void setDueTime(LocalDate dueTime) {
 		this.dueTime = dueTime;
 	}
 }

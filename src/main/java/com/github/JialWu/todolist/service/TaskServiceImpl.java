@@ -1,18 +1,19 @@
 package com.github.JialWu.todolist.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.JialWu.todolist.model.Task;
-import com.github.JialWu.todolist.repository.TaskRopository;
+import com.github.JialWu.todolist.repository.TaskRepository;
 
 @Service
 public class TaskServiceImpl implements TaskService{
 
 	@Autowired
-	private TaskRopository taskRepository;
+	private TaskRepository taskRepository;
 	
 	@Override
 	public Task saveTask(Task task) {
@@ -32,10 +33,21 @@ public class TaskServiceImpl implements TaskService{
 	@Override
 	public Task updateTask(int id, Task task) {
 		Task currentTask = taskRepository.findById(id).orElseThrow(RuntimeException::new);
-//		currentTask.setName(task.getName());
 		currentTask.setStatus(task.isStatus());
-//		currentTask.setDueTime(task.getDueTime());
 		return taskRepository.save(currentTask);
 	}
-	
+
+	@Override
+	public Task editTask(int id, Task task) {
+		Task currentTask = taskRepository.findById(id).orElseThrow(RuntimeException::new);
+		currentTask.setName(task.getName());
+		currentTask.setDueTime(task.getDueTime());
+		return taskRepository.save(currentTask);
+	}
+
+	@Override
+	public List<Task> getTasksByDueTime(LocalDate dueTime) {
+		return taskRepository.findUnfinishedWithDueTimeBefore(dueTime);
+	}
+
 }

@@ -1,8 +1,10 @@
 package com.github.JialWu.todolist.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,6 +47,17 @@ public class TaskController {
 	public ResponseEntity<Task> updateTask(@PathVariable int id, @RequestBody Task task) {
 		final Task updatedTask = taskService.updateTask(id, task);
 	    return ResponseEntity.ok(updatedTask);
+	}
+	
+	@PutMapping("/edit/{id}")
+	public ResponseEntity<Task> editTask(@PathVariable int id, @RequestBody Task task) {
+		final Task editedTask = taskService.editTask(id, task);
+	    return ResponseEntity.ok(editedTask);
+	}
+	@GetMapping("/get/{dueTime}")
+	public List<Task> getTasksByDueTime(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dueTime) {
+
+		return taskService.getTasksByDueTime(dueTime);
 	}
 
 }
