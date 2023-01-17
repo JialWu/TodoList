@@ -7,43 +7,68 @@ html, body, #app, #root{
 /* Header/logo Title */
 .header {
   padding: 1px;
-  background: black;
+  background: #0b2941;
   color: white;
+  display: flex;
+  align-items: center;
+  border-bottom: 10px solid #2196F3;
 }
-.header-name {
-  padding-left: 2%;
+
+.logo {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  border-radius: 3px;
 }
 
 /* Column container */
 .row {  
   display: flex;
   flex-wrap: wrap;
-  height: 80%
+  height: 90%
 }
 
 /* Create two unequal columns that sits next to each other */
 /* Sidebar/left column */
 .side {
-  flex: 15%;
+  flex: 8%;
   background-color: #f1f1f1;
-  padding: 10px;
+  padding-top: 5px;
+  border-right: 1px solid rgb(255, 255, 255);
 }
-/* Fake image, just for this example */
-.fakeimg {
-  background-color: #aaa;
-  width: 100%;
-  padding: 20px;
-  margin-top: 1%;
+
+.time-select {
+  background-color: #fff;
+  color: #2196F3;
+  font-weight: 500;
+  padding: 15px;
+  margin: 2%;
+}
+
+.time-select:hover {
+  background-color: #d5e2ed;
+  border-right: 5px solid #2196F3;
+  margin-right: 0;
+  transition-delay: 30ms;
 }
 
 /* Main column */
 .main {
   flex: 50%;
   background-color: white;
-  padding: 10px;
+  padding: 5px;
   margin-top: 1%;
-  margin-left: 11%;
-  margin-right: 11%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.timer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 5px;
+  z-index: 2;
+  text-align: center;
 }
 
 .taskField{
@@ -54,6 +79,7 @@ html, body, #app, #root{
   border:1px solid #607d8b;
   border-radius: 5px;
 }
+
 #standard-textarea:focus > .taskFieldInput{
   padding: 15px;
   border:2px solid red;
@@ -90,8 +116,19 @@ html, body, #app, #root{
   }
 }
 
+.overdued {
+  font-style: oblique;
+  color: rgb(240, 35, 35);
+}
 
+.alert {
+  float : inline-end;
+  border: #0b2941 1px solid;
+}
 
+.finished {
+  text-decoration: line-through;
+}
 
 .taskInput {
   width: 80%;

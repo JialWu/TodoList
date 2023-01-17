@@ -20,8 +20,9 @@ export default function Appbar() {
             sx={{ mr: 2 }}>
             <MenuIcon />
           </IconButton>
+          <img src="./todologo.png" alt=""  className="logo"/>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Todo List
+            TodoToday
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>

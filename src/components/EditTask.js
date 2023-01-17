@@ -1,5 +1,4 @@
 import * as React from 'react';
-import moment from 'moment'
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -24,48 +23,46 @@ const TaskButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export default function Taskfield({setTasks, setShow}) {
+export default function EditTask({task, setTasks, setEditShow}) {
   // const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-  const [timeAdded, setAddTime] = React.useState(moment().toJSON());
-  const [dueDate, setDueDate] = React.useState(moment().format('YYYY-MM-DD'));
+  // const [timeAdded, setAddTime] = React.useState(new Date().toJSON());
+  const [newDueDate, setNewDueDate] = React.useState(new Date());
   //var [timeAdded, setAddTime] = React.useState(new Date().toJSON());
-  const [name,setName] = React.useState('');
+  const [newName,setNewName] = React.useState(task.name);
   //const [status, setStatus] = React.useState(false);
-  const status = false;
+  // const status = false;
 
-  // const handleStatusChange=(e)=>{
-  //   setStatus(e.target.checked);
-  // }
-
-  const addTaskHandler=(e)=>{
+  const editTaskHandler=(e)=>{
     // Don't let it refresh the page
     e.preventDefault()
     // set the added time and due date and send to back-end
-    setAddTime(moment().toJSON());
-    var dueTime = dueDate
-    console.log(dueTime);
-    console.log(timeAdded);
+    // setEditTime(new Date().toJSON());
+    const dueTime = newDueDate.toJSON().slice(0,10)
+    const name = newName
+    // console.log(dueTime)
     // define the task message that needs to be sent
-    var task={name,timeAdded,status,dueTime}
-    console.log(task)
+    const editedTask={name,dueTime}
+    console.log(editedTask)
     //sent the message
-    fetch("http://192.168.178.31:8080/task/add",{
-    method:"Post",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(task)})
-    .then(()=>{
-    console.log("New Task added")
-    // finally clear the text input
-    setName("");
-    
-    fetch("http://192.168.178.31:8080/task/getAll")
-    .then(res=>res.json())
-    .then((result)=>{
-      setTasks(result);})
-  })}
-  const hideTaskField = (e) => {
-    setShow(false)
+    fetch("http://192.168.178.31:8080/task/edit/"+task.id,{
+        method:"Put",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(editedTask)})
+        .then(()=>{
+        console.log("Task edited")
+        // finally clear the text input
+        setNewName("");
+        
+        fetch("http://192.168.178.31:8080/task/getAll")
+        .then(res=>res.json())
+        .then((result)=>{
+        setTasks(result);})
+        })
+    setEditShow(false)
+  }
+  const hideEditField = (e) => {
+    setEditShow(false)
     //console.log(show)
   }
 
@@ -76,22 +73,22 @@ export default function Taskfield({setTasks, setShow}) {
           fullWidth
           id="standard-textarea"
           label=""
-          placeholder="add your next task, e.g., read a book"
+          placeholder=""
           multiline
           variant="standard"
           InputProps={{ disableUnderline: true, style: { fontWeight: 'bold' }}}
-          value={name}
-          onChange={(e)=>setName(e.target.value)}
+          value={newName}
+          onChange={(e)=>setNewName(e.target.value)}
         />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               label=""
-              value={dueDate}
+              value={newDueDate}
               InputProps={{
                 disableUnderline: true
               }}
               onChange={(newValue) => {
-                setDueDate(newValue);
+                setNewDueDate(newValue);
               }}
               renderInput={(params) => <TextField size="small" variant="standard" sx={{maxWidth: '130px', paddingTop: '25px'}}{...params} />}
             />
@@ -99,8 +96,8 @@ export default function Taskfield({setTasks, setShow}) {
       </div>
   
       <div className="addTaskContainer">
-        <TaskButton variant="contained" size="small" sx={{marginLeft: "auto", marginRight: "10px"}} onClick={addTaskHandler}>Add task</TaskButton>
-        <ColorButton variant="contained" size="small" onClick={hideTaskField}>cancel</ColorButton>
+        <TaskButton variant="contained" size="small" sx={{marginLeft: "auto", marginRight: "10px"}} onClick={editTaskHandler}>save</TaskButton>
+        <ColorButton variant="contained" size="small" onClick={hideEditField}>cancel</ColorButton>
       </div>
     </div>
   );
