@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PriorityField from './PriorityField';
 import moment from 'moment'
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
@@ -34,9 +35,11 @@ export default function Taskfield({setTasks, setShow}) {
   //const [status, setStatus] = React.useState(false);
   const status = false;
 
-  // const handleStatusChange=(e)=>{
-  //   setStatus(e.target.checked);
-  // }
+  const [selectedPriority, setSelectedPriority] = React.useState('');
+
+  const handleOptionChange = (option) => {
+    setSelectedPriority(option);
+  }
 
   const addTaskHandler=(e)=>{
     // Don't let it refresh the page
@@ -44,13 +47,11 @@ export default function Taskfield({setTasks, setShow}) {
     // set the added time and due date and send to back-end
     setAddTime(moment().toJSON());
     var dueTime = dueDate
-    console.log(dueTime);
-    console.log(timeAdded);
+    var priority = selectedPriority
     // define the task message that needs to be sent
-    var task={name,timeAdded,status,dueTime}
-    console.log(task)
+    var task={name,timeAdded,status,dueTime, priority}
     //sent the message
-    fetch("http://192.168.178.31:8080/task/add",{
+    fetch("http://127.0.0.1:8080/task/add",{
     method:"Post",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify(task)})
@@ -59,14 +60,13 @@ export default function Taskfield({setTasks, setShow}) {
     // finally clear the text input
     setName("");
     
-    fetch("http://192.168.178.31:8080/task/getAll")
+    fetch("http://127.0.0.1:8080/task/getAll")
     .then(res=>res.json())
     .then((result)=>{
       setTasks(result);})
   })}
   const hideTaskField = (e) => {
     setShow(false)
-    //console.log(show)
   }
 
   return (
@@ -96,6 +96,7 @@ export default function Taskfield({setTasks, setShow}) {
               renderInput={(params) => <TextField size="small" variant="standard" sx={{maxWidth: '130px', paddingTop: '25px'}}{...params} />}
             />
         </LocalizationProvider>
+        <PriorityField onOptionChange={handleOptionChange} />
       </div>
   
       <div className="addTaskContainer">

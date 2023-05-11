@@ -1,10 +1,21 @@
 import React, { useState, useRef, useEffect} from 'react';
 
 import { Button, Stack, Grid, Divider, Typography } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { red, blue } from '@mui/material/colors';
 
-//import { TextField } from '@mui/material';
+const theme = createTheme({
+    palette: {
+        primary: {
+        main: red[500],
+        },
+        secondary: {
+        main: blue[400],
+        },
+    },
+});
 
-export default function Timer() {
+export default function Ppomodoro() {
   const [timer, setTimer] = useState(1500); // 25 minutes
   const [start, setStart] = useState(false);
   const firstStart = useRef(true);
@@ -19,7 +30,7 @@ export default function Timer() {
 
     console.log("subsequent renders");
     console.log(start);
-    if (start) {
+    if (start && timer !== 0) {
       tick.current = setInterval(() => {
         setTimer((timer) => timer - 1);
       }, 1000);
@@ -29,7 +40,7 @@ export default function Timer() {
     }
 
     return () => clearInterval(tick.current);
-  }, [start]);
+  }, [start, timer]);
 
   const toggleStart = () => {
     setStart(!start);
@@ -41,11 +52,12 @@ export default function Timer() {
   };
 
   const dispSecondsAsMins = (seconds) => {
-    // 25:00
     console.log("seconds " + seconds);
-    const mins = Math.floor(seconds / 60);
-    const seconds_ = seconds % 60;
-    return mins.toString() + ":" + (seconds_ === 0 ? "00" : seconds_.toString());
+    const minute = Math.floor(seconds / 60);
+    const second = seconds % 60;
+    const m = (minute < 10 ? "0" + minute.toString() : minute.toString())
+    const s = (second < 10 ? "0" + second.toString() : second.toString());
+    return m + ":" + s;
   };
 
   return (
@@ -55,18 +67,18 @@ export default function Timer() {
                 {dispSecondsAsMins(timer)}
             </Typography>
         </Grid>
-        <Divider orientation="vertical" flexItem>
-            Timer
-        </Divider>
+        <Divider orientation="vertical" flexItem>Pomodoro</Divider>
         <Grid item xs={3}>
             <Stack direction="row" spacing={2} sx={{ mx: 'auto', width: 150, p:3 }}>
-                    <Button variant="outlined" onClick={toggleStart}>
-                        {!start ? "Start" : "Stop"}
-                    </Button>
-                    <Button variant="contained" onClick={toggleReset}>
-                        Reset
-                    </Button>
-                </Stack>
+            <ThemeProvider theme={theme}>
+                <Button variant="contained" onClick={toggleStart}>
+                    {!start ? "Start" : "Stop"}
+                </Button>
+                <Button variant="outlined" onClick={toggleReset} color="secondary">
+                    Reset
+                </Button>
+            </ThemeProvider>
+            </Stack>
         </Grid>
     </Grid>
   );

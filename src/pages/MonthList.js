@@ -33,10 +33,9 @@ const MonthList = () => {
     var curDate = today;
     var FirstDay = firstDayCurrentMonth.toJSON().slice(0,10)
     var LastDay = lastDayCurrentMonth.toJSON().slice(0,10)
-    console.log(FirstDay + LastDay)
     //var monday = new Date()
     React.useEffect(()=>{
-        fetch("http://192.168.178.31:8080/task/getAll")
+        fetch("http://127.0.0.1:8080/task/getAll")
         .then(res=>res.json())
         .then((result)=>{
           setTasks(result);
@@ -46,7 +45,6 @@ const MonthList = () => {
     const [show, setShow] = React.useState(false);
     const showTaskField = (e) => {
       setShow(true)
-      console.log(show)
     }
   return (
     <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>

@@ -142,7 +142,47 @@ html, body, #app, #root{
   resize: none;
 }
 
+/* DateTime.js */
+.calendar {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
 
+.weekday {
+  font-weight: 600;
+  font-size: 15;
+  color: #9b9b9b;
+  text-transform: uppercase;
+  margin-bottom: -3px;
+}
+
+.calendarDay {
+  font-weight: 700;
+  font-size: 41.31px;
+  line-height: 44.26px;
+  margin-bottom: -3px;
+}
+
+.calendarMonth {
+  font-size: 15;
+  line-height: 1.2;
+  color: #d8d8d8;
+}
+
+/* PriorityConverter.js */
+.low-priority {
+  color: #61dafb;
+}
+
+.medium-priority {
+  color: goldenrod;
+}
+
+.high-priority {
+  color: purple;
+}
 
 
 

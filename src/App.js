@@ -10,7 +10,7 @@ import WeekList from './pages/WeekList';
 import MonthList from './pages/MonthList';
 import SelectedList from './pages/SelectedList';
 import SetTimer from './pages/SetTimer';
-import Time from './components/Time'; 
+import Pomodoro from './components/Pomodoro'; 
 
 import './App.css';
 
@@ -27,12 +27,11 @@ function App() {
       <div className="header">
         <img src="./todologo.png" alt=""  className="logo"/>
         <h3 className="header-name">TodoToday</h3>
-        <button style={{marginLeft: "75%",background:"none", border:"none", color:"white", fontSize:"large", cursor:"pointer"}}></button>
       </div>
-      {/*  Timer  */}
+      {/*  Pomodoro  */}
       <div className="timer">
       <Paper sx={{ mx: 'auto', width: '500px', p:3, bgcolor: 'white' }} elevation={3}>
-        <Time />
+        <Pomodoro />
       </Paper>
       </div>
       {/* <!-- The flexible grid (content) --> */}
@@ -45,7 +44,6 @@ function App() {
             value={value}
             onChange={handleChange}
             aria-label="Vertical tabs example"
-            
           >
             <Tab label="Today" to='/' component={Link} />
             <Tab label="This Week" to='/WeekList' component={Link} />
@@ -58,7 +56,6 @@ function App() {
       
         <div className="main">
           {/* today's task list */}
-          <div>
             <Routes>
                 <Route path="/" element={<TodayList />}></Route>
                 <Route path="/WeekList" element={<WeekList />}></Route>
@@ -66,13 +63,8 @@ function App() {
                 <Route path="/SelectedList" element={<SelectedList />}></Route>
                 <Route path="/SetTimer" element={<SetTimer />}></Route>
             </Routes>
-          </div>
         </div>
       </div>
-
-      {/* <!-- Footer
-      <div className="footer" id="timer">
-      </div> --> */}
     </BrowserRouter>
   );
 }

@@ -23,7 +23,7 @@ const WeekList = () => {
     var LastDay = today.GetLastDayOfWeek().toJSON().slice(0,10)
     //var monday = new Date()
     React.useEffect(()=>{
-        fetch("http://192.168.178.31:8080/task/getAll")
+        fetch("http://127.0.0.1:8080/task/getAll")
         .then(res=>res.json())
         .then((result)=>{
           setTasks(result);
@@ -33,7 +33,6 @@ const WeekList = () => {
     const [show, setShow] = React.useState(false);
     const showTaskField = (e) => {
       setShow(true)
-      console.log(show)
     }
   return (
     <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>

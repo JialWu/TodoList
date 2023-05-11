@@ -1,10 +1,16 @@
 import * as React from 'react';
 import Todolist from '../components/TodoList';
+import DateTime from '../components/DateTime';
+import { Divider } from '@mui/material';
 
 const TodayList = () => {
   const [tasks, setTasks] = React.useState([]);
   return (
-    <><Todolist tasks={tasks} setTasks={setTasks}/></>
+    <>
+      <DateTime></DateTime>
+      <Divider />
+      <Todolist tasks={tasks} setTasks={setTasks}/>
+    </>
   )
 };
 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PriorityField from './PriorityField';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -24,28 +25,26 @@ const TaskButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function EditTask({task, setTasks, setEditShow}) {
-  // const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-  // const [timeAdded, setAddTime] = React.useState(new Date().toJSON());
   const [newDueDate, setNewDueDate] = React.useState(new Date());
-  //var [timeAdded, setAddTime] = React.useState(new Date().toJSON());
   const [newName,setNewName] = React.useState(task.name);
-  //const [status, setStatus] = React.useState(false);
-  // const status = false;
+
+  const [selectedPriority, setSelectedPriority] = React.useState('');
+
+  const handleOptionChange = (option) => {
+    setSelectedPriority(option);
+  }
 
   const editTaskHandler=(e)=>{
     // Don't let it refresh the page
     e.preventDefault()
     // set the added time and due date and send to back-end
-    // setEditTime(new Date().toJSON());
     const dueTime = newDueDate.toJSON().slice(0,10)
     const name = newName
-    // console.log(dueTime)
+    var priority = selectedPriority
     // define the task message that needs to be sent
-    const editedTask={name,dueTime}
-    console.log(editedTask)
+    const editedTask={name,dueTime,priority}
     //sent the message
-    fetch("http://192.168.178.31:8080/task/edit/"+task.id,{
+    fetch("http://127.0.0.1:8080/task/edit/"+task.id,{
         method:"Put",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(editedTask)})
@@ -54,7 +53,7 @@ export default function EditTask({task, setTasks, setEditShow}) {
         // finally clear the text input
         setNewName("");
         
-        fetch("http://192.168.178.31:8080/task/getAll")
+        fetch("http://127.0.0.1:8080/task/getAll")
         .then(res=>res.json())
         .then((result)=>{
         setTasks(result);})
@@ -63,7 +62,6 @@ export default function EditTask({task, setTasks, setEditShow}) {
   }
   const hideEditField = (e) => {
     setEditShow(false)
-    //console.log(show)
   }
 
   return (
@@ -92,6 +90,7 @@ export default function EditTask({task, setTasks, setEditShow}) {
               }}
               renderInput={(params) => <TextField size="small" variant="standard" sx={{maxWidth: '130px', paddingTop: '25px'}}{...params} />}
             />
+        <PriorityField onOptionChange={handleOptionChange} />
         </LocalizationProvider>
       </div>
   
