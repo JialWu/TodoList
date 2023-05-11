@@ -42,12 +42,12 @@ public class TaskServiceImpl implements TaskService{
 		Task currentTask = taskRepository.findById(id).orElseThrow(RuntimeException::new);
 		currentTask.setName(task.getName());
 		currentTask.setDueTime(task.getDueTime());
+		currentTask.setPriority(task.getPriority());
 		return taskRepository.save(currentTask);
 	}
 
 	@Override
 	public List<Task> getTasksByDueTime(LocalDate dueTime) {
-		return taskRepository.findUnfinishedWithDueTimeBefore(dueTime);
+		return null;
 	}
-
 }

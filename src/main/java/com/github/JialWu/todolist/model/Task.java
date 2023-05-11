@@ -1,7 +1,5 @@
 package com.github.JialWu.todolist.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +16,7 @@ public class Task {
 	private boolean status;
 	private Instant timeAdded;
 	private LocalDate dueTime;
+	private int priority;
 
 	public Task() {
 	}
@@ -61,4 +60,8 @@ public class Task {
 	public void setDueTime(LocalDate dueTime) {
 		this.dueTime = dueTime;
 	}
+
+	public int getPriority() { return priority; }
+
+	public void setPriority(int priority) { this.priority = priority; }
 }
